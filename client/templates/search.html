@@ -1,6 +1,6 @@
-<div>
+<div id="bar">
   <form>
-    <label for="name">Name:</label> <input ng-model="$ctrl.value" type="text" id="name" name="user_name">
-    <button ng-click="$ctrl.search($ctrl.value)" value="Send">search</button>
+    <label for="searchField">Name:</label>
+    <input ng-change="$ctrl.search($ctrl.value)" ng-model-options='{ debounce: 500 }' ng-model="$ctrl.value" type="text" id="searchField" name="user_name">
   </form>
 </div>

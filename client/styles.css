@@ -1,0 +1,20 @@
+#bar {
+  width: 100%;
+  background-color: black
+}
+
+body {
+  font-family: 'Oswald'
+}
+
+#searchField {
+  height: 26px;
+}
+
+#bar #butt {
+  height: 26px;
+  background-color: white;
+  color: white;
+  border: none;
+  overflow: hidden;
+}

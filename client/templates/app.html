@@ -1,8 +1,10 @@
 <div>
-  <div>
-    <list artists="$ctrl.similarArtists"/>
+  <h4> Search Artists </h4>
+  There are {{$ctrl.similarArtists.length}} artists.
+  <div id="searchBar">
   </div>
   <div>
     <search search="$ctrl.search" />
   </div>
+  <list artists="$ctrl.similarArtists"/>
 </div>

@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParse = require('body-parser');
 const request = require('request');
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT
 const app = express()
 app.use(function(req, res, next) {
   res.set("Access-Control-Allow-Origin", "*")

@@ -1,12 +1,64 @@
 const express = require('express');
-const bodyParse = require('body-parser')
-const PORT = process.env.PORT;
+const bodyParse = require('body-parser');
+const request = require('request');
+
+var PORT = process.env.PORT || 3000;
 const app = express()
+app.use(function(req, res, next) {
+  res.set("Access-Control-Allow-Origin", "*")
+  next()
+});
 
 // app.set('port', PORT || 3000);
 app.use(express.static(__dirname + '/../client'));
 app.use(express.static(__dirname + '/../node_modules'));
 
-app.listen(3000, function() {
+
+app.use('/search', function(req, res){
+
+  // var options = {
+  //      type: "GET",
+  //      url: "http://ws.audioscrobbler.com/2.0/",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "api_key": '04c96ec32bbace5646ad77d7c171ae4a',
+  //       "method": "artist.getInfo",
+  //       "artist": "The Drums"
+  //     }
+  //   }
+  // }
+  console.log(req.data, req.body, req.query)
+    request( {
+    url: 'http://ws.audioscrobbler.com/2.0/',
+    type: 'GET',
+    qs: {
+    method: 'artist.getsimilar',
+    artist: 'Cher',
+    api_key: '04c96ec32bbace5646ad77d7c171ae4a' ,
+    format: 'json'
+  },
+    headers: {
+      "Content-Type": "application/json"
+    }
+    // format: 'json'
+    // // data: 'the drums',
+    //     headers: {
+    //       "Content-Type": "application/json",
+          // "api_key": '04c96ec32bbace5646ad77d7c171ae4a',
+          // "method": "artist.getInfo",
+          // "artist": "The Drums"
+ }, function(err, response, body){
+   if (err) {
+     throw err
+   }
+   // body = JSON.parse(body)
+   res.set('Content-Type', 'application/json')
+   // console.log(body.similarartists.artist[0])
+   res.end(body)
+ })
+ // .then((data)=>{console.log(data); res.send(data)})
+})
+
+app.listen(PORT, function() {
   console.log('listening on port 3000!');
 });

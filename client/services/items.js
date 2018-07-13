@@ -1,7 +1,13 @@
 angular.module('app')
 .service('itemsService', function($http) {
-  this.getAll = function(callback) {
-    $http.get('/items')
+  this.getAll = function(callback, query) {
+    $http({
+      method: 'POST',
+      url: '/search',
+      params: {
+        body: query
+      }
+    })
     .then(function({data}) {
       if(callback) {
         callback(data);

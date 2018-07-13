@@ -5,11 +5,6 @@ angular.module('app')
     search: '<'
   },
   controller: function() {
-    // this.data = null;
-    // this.search = function(){
-    //   this.data = this.value;
-    //   console.log('hello', this.data)
-    // }
   },
   templateUrl: '/templates/search.html',
 });

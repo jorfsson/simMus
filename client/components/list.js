@@ -1,7 +1,7 @@
 angular.module('app')
 .component('list', {
   bindings: {
-    items: '<',
+    artists: '<',
   },
   controller: function() {},
   templateUrl: '/templates/list.html'

@@ -3,13 +3,12 @@ angular.module('app')
   // itemsService.getAll((data) => {
   //   console.log(data)
   // }, this.searchedTerm);
-
+  this.similarArtists = [];
   this.searchedTerm = 'Cher';
   this.search =  function(value) {
     this.searchedTerm = value
-    console.log(this.searchedTerm)
     itemsService.getAll((data) => {
-      console.log(data)
+      this.similarArtists = data.similarartists.artist
     }, this.searchedTerm);
   };
   this.search = this.search.bind(this);

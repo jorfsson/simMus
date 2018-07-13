@@ -16,37 +16,18 @@ app.use(express.static(__dirname + '/../node_modules'));
 
 app.use('/search', function(req, res){
 
-  // var options = {
-  //      type: "GET",
-  //      url: "http://ws.audioscrobbler.com/2.0/",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "api_key": '04c96ec32bbace5646ad77d7c171ae4a',
-  //       "method": "artist.getInfo",
-  //       "artist": "The Drums"
-  //     }
-  //   }
-  // }
-  console.log(req.data, req.body, req.query)
     request( {
     url: 'http://ws.audioscrobbler.com/2.0/',
     type: 'GET',
     qs: {
     method: 'artist.getsimilar',
-    artist: 'Cher',
+    artist: req.query.body,
     api_key: '04c96ec32bbace5646ad77d7c171ae4a' ,
     format: 'json'
   },
     headers: {
       "Content-Type": "application/json"
     }
-    // format: 'json'
-    // // data: 'the drums',
-    //     headers: {
-    //       "Content-Type": "application/json",
-          // "api_key": '04c96ec32bbace5646ad77d7c171ae4a',
-          // "method": "artist.getInfo",
-          // "artist": "The Drums"
  }, function(err, response, body){
    if (err) {
      throw err

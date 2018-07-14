@@ -7,10 +7,12 @@ angular.module('app')
   this.searchedTerm = 'Cher';
   this.search =  function(value) {
     this.searchedTerm = value
-    itemsService.getAll((data) => {
+    itemsService.getAll((data)=>{
       this.similarArtists = data.similarartists.artist
-      console.log(this.similarArtists)
     }, this.searchedTerm);
+    // this.similarArtists.forEach((artist)=>{
+    //   itemsService.getInfo((data) => {console.log(data)}, artist.name)
+    // });
   };
   this.search = this.search.bind(this);
 })

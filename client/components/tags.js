@@ -4,7 +4,6 @@ angular.module('app')
     tag: '<',
   },
   controller: function() {
-    console.log(this)
   },
   templateUrl: '/templates/tags.html',
 });

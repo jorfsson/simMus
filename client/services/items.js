@@ -9,6 +9,7 @@ angular.module('app')
       }
     })
     .then(function({data}) {
+      console.log(data)
       if(callback) {
         callback(data);
       }

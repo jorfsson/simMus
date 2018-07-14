@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const request = require('request');
-const db = require('../database')
+const db = require('../database');
+const helpers = require('../helpers');
+
 var PORT = process.env.PORT || 3000
 const app = express()
 app.use(function(req, res, next) {
@@ -55,15 +57,23 @@ app.use('/details', function(req, res){
      throw err
    }
    res.set('Content-Type', 'application/json')
+   let json = JSON.parse(body);
+   let sql = {
+     name: json.artist.name,
+     image: json.artist.image[3]['#text'],
+     summary: helpers.summarizer(json.artist.bio.summary)
+   }
+   db.insert((err, data)=>{
+     if (err) {
+       console.log(err);
+     };
+   }, 'artist', sql)
    res.end(body)
  })
 })
 
-app.use('/db', function(req, res){
-  db.selectAll((data)=>{console.log(data)})
-  console.log('hello')
-  res.end()
-});
+
+
 
 app.listen(PORT, function() {
   console.log('listening on port 3000!');

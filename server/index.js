@@ -58,22 +58,29 @@ app.use('/details', function(req, res){
    }
    res.set('Content-Type', 'application/json')
    let json = JSON.parse(body);
-   let sql = {
-     name: json.artist.name,
-     image: json.artist.image[3]['#text'],
-     summary: helpers.summarizer(json.artist.bio.summary)
-   }
-   db.insert((err, data)=>{
-     if (err) {
-       console.log(err);
-     };
-   }, 'artist', sql)
+   db.findDuplicateArtist((err, data) =>{
+     if (err) console.log(err)
+     if (data.length !== 0) {
+       console.log('Artist already exists')
+     } else {
+       let sql = {
+         name: json.artist.name,
+         image: json.artist.image[3]['#text'],
+         summary: helpers.summarizer(json.artist.bio.summary),
+         url: json.artist.bio,
+         listeners: json.artist.stats.listeners,
+         playcount: json.artist.stats.playcount
+       };
+       db.insert((err, data)=>{
+         if (err) {
+           console.log(err);
+         };
+       }, 'artist', sql)
+     }
+   }, 'artist', json.artist.name)
    res.end(body)
  })
 })
-
-
-
 
 app.listen(PORT, function() {
   console.log('listening on port 3000!');

@@ -18,6 +18,8 @@ h4 {
 
 .tag {
   border: 1px solid red;
+  width: 100%;
+  display: block;
   clear: right;
   float: right
 }
@@ -28,9 +30,12 @@ h4 {
 }
 
 .artistBlock {
-    display: inline-flex;
+  display: inline-flex;
 }
 
+.artistname {
+  width: 10%;
+}
 
 .artist img {
   border: 1px solid red;
@@ -40,6 +45,6 @@ h4 {
 
 .summary {
   border: 1px solid red;
-
+  width: 60%;
   float: left
 }

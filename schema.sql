@@ -9,9 +9,9 @@ CREATE TABLE artist (
   name varchar(50) NOT NULL UNIQUE,
   image varchar(120),
   summary varchar(1000),
-  url varchar(50) NOT NULL UNIQUE,
+  url varchar(50) NOT NULL,
   listeners int NOT NULL,
-  playcount int NOT NULL
+  playcount int NOT NULL,
   PRIMARY KEY (ID)
 );
 
@@ -27,17 +27,18 @@ CREATE TABLE similar (
 CREATE TABLE tags (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(50) NOT NULL UNIQUE,
-  url varchar(50) NOT NULL UNIQUE,
+  url varchar(50) NOT NULL,
   PRIMARY KEY (ID)
 );
 
-CREATE TABLE artist_tags {
+CREATE TABLE artist_tags (
   id int NOT NULL AUTO_INCREMENT,
   artist_id int,
   tag_id int,
+  PRIMARY KEY (ID),
   FOREIGN KEY (artist_id) REFERENCES artist(id),
   FOREIGN KEY (tag_id) REFERENCES tags(id)
-}
+);
 --
 
 

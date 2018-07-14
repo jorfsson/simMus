@@ -17,7 +17,7 @@ connection.connect(function(err) {
 });
 
 var selectAll = function(callback, table) {
-  connection.query(`SELECT * FROM ${table}`, function(err, results, fields) {
+  connection.query(`SELECT * FROM ?`, [table], function(err, results, fields) {
     if  (err) {
       callback(err, null);
     } else {
@@ -26,18 +26,19 @@ var selectAll = function(callback, table) {
   });
 };
 
-var findDuplicate = function(callback, table) {
-  connection.query(`SELECT * FROM ${table}`), function(err, results, fields) {
+var findDuplicateArtist = function(callback, table, artist) {
+  console.log(table, artist)
+  connection.query(`SELECT * FROM ${table} WHERE name = ?`, [artist], function(err, results, fields) {
     if (err) {
       callback(err, null)
     } else {
       callback(null, results)
     }
-  }
+  });
 }
 
-var insertArtist = function(callback, table, data) {
-  connection.query(`INSERT INTO ${table} SET ? `, data, function(err, results, fields) {
+var insert = function(callback, table, data) {
+  connection.query(`INSERT INTO ${table} SET ?`, data, function(err, results, fields) {
     if  (err) {
       callback(err, null);
     } else {
@@ -49,4 +50,5 @@ var insertArtist = function(callback, table, data) {
 
 
 module.exports.selectAll = selectAll;
-module.exports.insertArtist = insertArtist;
+module.exports.insert = insert;
+module.exports.findDuplicateArtist = findDuplicateArtist;

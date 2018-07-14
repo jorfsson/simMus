@@ -14,5 +14,4 @@ const summarizer = (summary) => {
   }
 }
 
-
 module.exports.summarizer = summarizer

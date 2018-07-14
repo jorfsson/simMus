@@ -11,10 +11,8 @@ app.use(function(req, res, next) {
   next()
 });
 
-// app.set('port', PORT || 3000);
 app.use(express.static(__dirname + '/../client'));
 app.use(express.static(__dirname + '/../node_modules'));
-
 
 app.use('/search', function(req, res){
   request( {
@@ -33,14 +31,22 @@ app.use('/search', function(req, res){
    if (err) {
      throw err
    }
-   res.set('Content-Type', 'application/json')
-   var parsedBody = JSON.parse(body)
-   res.end(body)
+   res.set('Content-Type', 'application/json');
+   var parsedBody = JSON.parse(body);
+   // console.log(parsedBody.similarartists.artist[0])
+   parsedBody.similarartists.artist.forEach(function(artist){
+     db.insert((err, data)=>{
+       if (err) {
+         console.log(err);
+       };
+     }, 'artist', {name: artist.name})
+   })
+   res.end(body);
  })
 })
 
 app.use('/details', function(req, res){
-  request( {
+  request({
     url: 'http://ws.audioscrobbler.com/2.0/',
     type: 'GET',
     qs: {
@@ -60,18 +66,18 @@ app.use('/details', function(req, res){
    let json = JSON.parse(body);
    db.findDuplicateArtist((err, data) =>{
      if (err) console.log(err)
-     if (data.length !== 0) {
+     // console.log(data);
+     if (data === null || data[0].image !== 'blank') {
        console.log('Artist already exists')
      } else {
-       let sql = {
-         name: json.artist.name,
+       let sql = [{
          image: json.artist.image[3]['#text'],
          summary: helpers.summarizer(json.artist.bio.summary),
          url: json.artist.bio,
          listeners: json.artist.stats.listeners,
          playcount: json.artist.stats.playcount
-       };
-       db.insert((err, data)=>{
+       }, json.artist.name]
+       db.update((err, data)=>{
          if (err) {
            console.log(err);
          };
@@ -83,5 +89,5 @@ app.use('/details', function(req, res){
 })
 
 app.listen(PORT, function() {
-  console.log('listening on port 3000!');
+  console.log(`listening on port ${PORT}!`);
 });

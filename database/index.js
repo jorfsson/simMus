@@ -47,8 +47,19 @@ var insert = function(callback, table, data) {
   });
 };
 
+var update = function(callback, table, data) {
+  connection.query(`UPDATE ${table} SET ? WHERE name = ?`, data, function(err, results, fields) {
+    if  (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 
 
 module.exports.selectAll = selectAll;
 module.exports.insert = insert;
 module.exports.findDuplicateArtist = findDuplicateArtist;
+module.exports.update = update;

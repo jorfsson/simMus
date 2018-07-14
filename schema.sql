@@ -7,11 +7,11 @@ USE artists;
 CREATE TABLE artist (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(50) NOT NULL UNIQUE,
-  image varchar(120),
-  summary varchar(1000),
-  url varchar(50) NOT NULL,
-  listeners int NOT NULL,
-  playcount int NOT NULL,
+  image varchar(120) DEFAULT 'blank',
+  summary varchar(1000) DEFAULT 'blank',
+  url varchar(50) DEFAULT 'blank',
+  listeners int DEFAULT 0,
+  playcount int DEFAULT 0,
   PRIMARY KEY (ID)
 );
 

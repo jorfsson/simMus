@@ -9,6 +9,7 @@ angular.module('app')
     this.searchedTerm = value
     itemsService.getAll((data) => {
       this.similarArtists = data.similarartists.artist
+      console.log(this.similarArtists)
     }, this.searchedTerm);
   };
   this.search = this.search.bind(this);

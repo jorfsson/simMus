@@ -27,6 +27,7 @@ angular.module('app')
     })
     .then(function({data}) {
       if(callback) {
+        console.log(data)
         callback(data);
       }
     })

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const request = require('request');
-
+const db = require('../database')
 var PORT = process.env.PORT || 3000
 const app = express()
 app.use(function(req, res, next) {
@@ -32,6 +32,7 @@ app.use('/search', function(req, res){
      throw err
    }
    res.set('Content-Type', 'application/json')
+   var parsedBody = JSON.parse(body)
    res.end(body)
  })
 })
@@ -57,6 +58,12 @@ app.use('/details', function(req, res){
    res.end(body)
  })
 })
+
+app.use('/db', function(req, res){
+  db.selectAll((data)=>{console.log(data)})
+  console.log('hello')
+  res.end()
+});
 
 app.listen(PORT, function() {
   console.log('listening on port 3000!');

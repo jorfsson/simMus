@@ -7,34 +7,39 @@ body {
   font-family: 'Oswald'
 }
 
-#searchField {
-  height: 26px;
-}
-
-#bar #butt {
-  height: 26px;
-  background-color: white;
-  color: white;
-  border: none;
-  overflow: hidden;
-}
-
 h4 {
   font-size: 30px
 }
 
+.searchField {
+  border: 1px solid red;
+  height: 26px;
+}
+
 .tag {
+  border: 1px solid red;
   clear: right;
   float: right
 }
 
 .artist {
-  clear:both;
+  border: 1px solid red;
+  clear:right;
+}
+
+.artistBlock {
+    display: inline-flex;
 }
 
 
-
 .artist img {
+  border: 1px solid red;
+
   float: left;
-  clear: both
+}
+
+.summary {
+  border: 1px solid red;
+
+  float: left
 }

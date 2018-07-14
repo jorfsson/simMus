@@ -15,8 +15,7 @@ app.use(express.static(__dirname + '/../node_modules'));
 
 
 app.use('/search', function(req, res){
-
-    request( {
+  request( {
     url: 'http://ws.audioscrobbler.com/2.0/',
     type: 'GET',
     qs: {
@@ -32,12 +31,31 @@ app.use('/search', function(req, res){
    if (err) {
      throw err
    }
-   // body = JSON.parse(body)
    res.set('Content-Type', 'application/json')
-   // console.log(body.similarartists.artist[0])
    res.end(body)
  })
- // .then((data)=>{console.log(data); res.send(data)})
+})
+
+app.use('/details', function(req, res){
+  request( {
+    url: 'http://ws.audioscrobbler.com/2.0/',
+    type: 'GET',
+    qs: {
+    method: 'artist.getInfo',
+    artist: req.query.body,
+    api_key: '04c96ec32bbace5646ad77d7c171ae4a' ,
+    format: 'json'
+  },
+    headers: {
+      "Content-Type": "application/json"
+    }
+ }, function(err, response, body){
+   if (err) {
+     throw err
+   }
+   res.set('Content-Type', 'application/json')
+   res.end(body)
+ })
 })
 
 app.listen(PORT, function() {

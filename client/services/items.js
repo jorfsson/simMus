@@ -17,4 +17,21 @@ angular.module('app')
       console.log(err);
     });
   };
+  this.getInfo = function(callback, query) {
+    $http({
+      method: 'POST',
+      url: '/details',
+      params: {
+        body: query
+      }
+    })
+    .then(function({data}) {
+      if(callback) {
+        callback(data);
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+  };
 });

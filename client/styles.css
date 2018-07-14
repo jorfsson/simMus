@@ -18,3 +18,23 @@ body {
   border: none;
   overflow: hidden;
 }
+
+h4 {
+  font-size: 30px
+}
+
+.tag {
+  clear: right;
+  float: right
+}
+
+.artist {
+  clear:both;
+}
+
+
+
+.artist img {
+  float: left;
+  clear: both
+}

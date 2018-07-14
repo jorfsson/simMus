@@ -1,3 +1,5 @@
-<div>
+<div class="artist" ng-click="$ctrl.getDetails()">
   {{$ctrl.item.name}}
+  <img src="{{$ctrl.artist.image[3]['#text']}}"></img>
+  <tag ng-repeat="tag in $ctrl.tags" tag=tag />
 </div>

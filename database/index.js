@@ -1,29 +1,18 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+var mysql = require('mysql');
 
-var db = mongoose.connection;
-
-db.on('error', function() {
-  console.log('mongoose connection error');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'FILL_ME_IN',
+  database : 'test'
 });
-
-db.once('open', function() {
-  console.log('mongoose connected successfully');
-});
-
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
-});
-
-var Item = mongoose.model('Item', itemSchema);
 
 var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
+  connection.query('SELECT * FROM items', function(err, results, fields) {
     if(err) {
       callback(err, null);
     } else {
-      callback(null, items);
+      callback(null, results);
     }
   });
 };

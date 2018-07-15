@@ -19,14 +19,12 @@ const selectAll = (table) =>
     });
   });
 
-
 const findDuplicateArtist = (table, artist) =>
   new Promise((resolve, reject) => {
     connection.query(`SELECT * FROM ${table} WHERE name = ?`, [artist], (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   })
-
 
 const insert = (table, data) =>
   new Promise ((resolve, reject) => {
@@ -49,9 +47,18 @@ const addSimilar = (callback, data) =>
     });
   });
 
+const addArtist = (artistName) => {
+  findDuplicateArtist('artist', artistName)
+  .then((data) => {
+    if (data.length === 0) {
+      insert('artist', {name: artistName}).then((data) => {console.log(data)})
+    } else { console.log('Already exists in database')}
+  }).catch((err) => {console.log(err)})
+}
 
 module.exports.selectAll = selectAll;
 module.exports.insert = insert;
 module.exports.findDuplicateArtist = findDuplicateArtist;
 module.exports.update = update;
 module.exports.addSimilar = addSimilar;
+module.exports.addArtist = addArtist;

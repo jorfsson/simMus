@@ -33,71 +33,45 @@ app.use('/search', function(req, res){
     if (err) throw err;
     const artists = JSON.parse(body).similarartists.artist
 
-    if (!artists) {
-      res.end()
-    }
+    if (!artists) res.end()
 
-    db.findDuplicateArtist('artist', artistName)
-    .then((data) => {
-      if (!!!data) {
-        db.insert('artist', {name: artistName}).then((data) => {console.log(data)})
-      } else { console.log('Already exists in database')}
-    }).catch((err) => {console.log(err)})
-
-   //  parsedBody.similarartists.artist.forEach(function(artist){
-   //   db.insert((err, data) => {
-   //     if (err) console.log(err);
-   //   }, 'artist', {name: artist.name})
-   //   db.addSimilar((err, data) => {
-   //     if (err) console.log(err);
-   //   }, [req.query.body, artist.name])
-   // })
-
+    db.addArtist(artistName)
+    artists.forEach((artist) => {
+      db.addArtist(artist.name)
+    });
    res.end(body);
  })
 })
 
 app.use('/details', function(req, res){
+  var artistName = req.query.body;
   request({
     url: 'http://ws.audioscrobbler.com/2.0/',
     type: 'GET',
     qs: {
     method: 'artist.getInfo',
-    artist: req.query.body,
+    artist: artistName,
     api_key: '04c96ec32bbace5646ad77d7c171ae4a' ,
     format: 'json'
   },
     headers: {
       "Content-Type": "application/json"
     }
- }, function(err, response, body){
-   if (err) {
-     throw err
-   }
-   res.set('Content-Type', 'application/json')
-   let json = JSON.parse(body);
-   db.findDuplicateArtist((err, data) =>{
-     if (err) console.log(err)
-     // console.log(data);
-     if (data === null || data[0].image !== 'blank') {
-       console.log('Artist already exists')
-     } else {
-       let sql = [{
-         image: json.artist.image[3]['#text'],
-         summary: helpers.summarizer(json.artist.bio.summary),
-         url: json.artist.bio,
-         listeners: json.artist.stats.listeners,
-         playcount: json.artist.stats.playcount
-       }, json.artist.name]
-       db.update((err, data)=>{
-         if (err) {
-           console.log(err);
-         };
-       }, 'artist', sql)
-     }
-   }, 'artist', json.artist.name)
-   res.end(body)
- })
+  }, (err, response, body) => {
+    if (err) throw err;
+    const artist = JSON.parse(body).artist;
+
+    const sql = [{
+        image: artist.image[3]['#text'],
+        summary: helpers.summarizer(artist.bio.summary),
+        url: artist.bio,
+        listeners: artist.stats.listeners,
+        playcount: artist.stats.playcount
+      }, artist.name]
+
+    db.update('artist', sql);
+    res.end(body)
+  })
 })
 
 app.get('/testings', (req, res) => {

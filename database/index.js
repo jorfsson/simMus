@@ -1,11 +1,11 @@
-var mysql = require('mysql');
-
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '!Srekwah1',
-  socketPath: '/var/run/mysqld/mysqld.sock',
-  database: 'artists'
+// var mysql = require('mysql');
+var pg = require('pg');
+var connection = new pg.Client({
+  host: 'ec2-54-227-240-7.compute-1.amazonaws.com',
+  user: 'auveunhkxoqjlx',
+  password: '!d0dc24109a6d93a5fd01fd60bf54467425b7277576056f860ff0ef2a4ef1b4bb',
+  // socketPath: '/var/run/mysqld/mysqld.sock',
+  port: '5432'
 });
 
 connection.connect(function(err) {

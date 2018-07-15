@@ -12,12 +12,12 @@ h4 {
 }
 
 .searchField {
-  border: 1px solid red;
+
   height: 26px;
 }
 
 .tag {
-  border: 1px solid red;
+
   width: 100%;
   display: block;
   clear: right;
@@ -25,26 +25,30 @@ h4 {
 }
 
 .artist {
-  border: 1px solid red;
+
   clear:right;
 }
 
-.artistBlock {
-  display: inline-flex;
-}
 
 .artistname {
+  display: inline-block;
   width: 10%;
 }
 
+.descriptionBlock {
+
+  display: inline-flex;
+}
+
 .artist img {
-  border: 1px solid red;
+
 
   float: left;
 }
 
 .summary {
-  border: 1px solid red;
+  position: relative;
+
   width: 60%;
   float: left
 }

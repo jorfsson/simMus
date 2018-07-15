@@ -20,15 +20,16 @@
   "dependencies": {
     "angular": "^1.6.3",
     "body-parser": "^1.17.2",
+    "d3-node": "^2.0.1",
     "express": "^4.15.0",
     "jquery": "^3.1.1",
     "mongoose": "^4.8.6",
     "mysql": "^2.13.0",
+    "pg": "^7.4.3",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
-
-  "engines":{
+  "engines": {
     "node": "8.11.3",
     "npm": "5.6.0"
   }

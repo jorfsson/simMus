@@ -6,6 +6,7 @@ const helpers = require('../helpers');
 
 var PORT = process.env.PORT || 3000
 const app = express()
+
 app.use(function(req, res, next) {
   res.set("Access-Control-Allow-Origin", "*")
   next()
@@ -15,35 +16,43 @@ app.use(express.static(__dirname + '/../client'));
 app.use(express.static(__dirname + '/../node_modules'));
 
 app.use('/search', function(req, res){
+  var artistName = req.query.body;
   request({
     url: 'http://ws.audioscrobbler.com/2.0/',
     type: 'GET',
     qs: {
       method: 'artist.getsimilar',
-      artist: req.query.body,
+      artist: artistName,
       api_key: '04c96ec32bbace5646ad77d7c171ae4a' ,
       format: 'json'
     },
     headers: {
       "Content-Type": "application/json"
     }
-  }, function(err, response, body){
-    if (err) {
-      throw err
+  }, (err, response, body) => {
+    if (err) throw err;
+    const artists = JSON.parse(body).similarartists.artist
+
+    if (!artists) {
+      res.end()
     }
-    res.set('Content-Type', 'application/json');
-    var parsedBody = JSON.parse(body);
-    db.insert((err, data)=>{
-      if (err) console.log(err)
-    }, 'artist', {name: req.query.body});
-   parsedBody.similarartists.artist.forEach(function(artist){
-     db.insert((err, data) => {
-       if (err) console.log(err);
-     }, 'artist', {name: artist.name})
-     db.addSimilar((err, data) => {
-       if (err) console.log(err);
-     }, [req.query.body, artist.name])
-   })
+
+    db.findDuplicateArtist('artist', artistName)
+    .then((data) => {
+      if (!!!data) {
+        db.insert('artist', {name: artistName}).then((data) => {console.log(data)})
+      } else { console.log('Already exists in database')}
+    }).catch((err) => {console.log(err)})
+
+   //  parsedBody.similarartists.artist.forEach(function(artist){
+   //   db.insert((err, data) => {
+   //     if (err) console.log(err);
+   //   }, 'artist', {name: artist.name})
+   //   db.addSimilar((err, data) => {
+   //     if (err) console.log(err);
+   //   }, [req.query.body, artist.name])
+   // })
+
    res.end(body);
  })
 })
@@ -89,6 +98,11 @@ app.use('/details', function(req, res){
    }, 'artist', json.artist.name)
    res.end(body)
  })
+})
+
+app.get('/testings', (req, res) => {
+   db.findDuplicateArtist('artist', 'Bon Iver').then((data)=>{console.log(data)})
+  res.end();
 })
 
 app.listen(PORT, function() {

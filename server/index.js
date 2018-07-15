@@ -37,7 +37,9 @@ app.use('/search', function(req, res){
 
     db.addArtist(artistName)
     artists.forEach((artist) => {
-      db.addArtist(artist.name)
+      db.addArtist(artist.name, artistName);
+
+      db.addSimilar([artistName, artist.name]);
     });
    res.end(body);
  })
@@ -59,6 +61,7 @@ app.use('/details', function(req, res){
     }
   }, (err, response, body) => {
     if (err) throw err;
+
     const artist = JSON.parse(body).artist;
 
     const sql = [{

@@ -19,6 +19,7 @@ const selectAll = (table) =>
     });
   });
 
+
 const findDuplicateArtist = (table, artist) =>
   new Promise((resolve, reject) => {
     connection.query(`SELECT * FROM ${table} WHERE name = ?`, [artist], (err, results) => {
@@ -40,21 +41,21 @@ const update = (table, data) =>
     });
   })
 
-const addSimilar = (callback, data) =>
+const addSimilar = (data) =>
   new Promise ((resolve, reject) => {
     connection.query(`INSERT INTO similar (artist_id, similar_id) VALUES ((SELECT id FROM artist WHERE name=?), (SELECT id FROM artist WHERE name=?))`, data, (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   });
 
-const addArtist = (artistName) => {
+const addArtist = (artistName, parentArtist) =>
   findDuplicateArtist('artist', artistName)
   .then((data) => {
     if (data.length === 0) {
       insert('artist', {name: artistName}).then((data) => {console.log(data)})
     } else { console.log('Already exists in database')}
   }).catch((err) => {console.log(err)})
-}
+
 
 module.exports.selectAll = selectAll;
 module.exports.insert = insert;

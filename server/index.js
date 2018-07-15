@@ -38,7 +38,6 @@ app.use('/search', function(req, res){
     db.addArtist(artistName)
     artists.forEach((artist) => {
       db.addArtist(artist.name, artistName);
-
       db.addSimilar([artistName, artist.name]);
     });
    res.end(body);
@@ -77,10 +76,6 @@ app.use('/details', function(req, res){
   })
 })
 
-app.get('/testings', (req, res) => {
-   db.findDuplicateArtist('artist', 'Bon Iver').then((data)=>{console.log(data)})
-  res.end();
-})
 
 app.listen(PORT, function() {
   console.log(`listening on port ${PORT}!`);

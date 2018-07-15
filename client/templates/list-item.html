@@ -3,7 +3,7 @@
   <div class="artistname">{{$ctrl.item.name}}</div>
   <img src="{{$ctrl.artist.image[3]['#text']}}"></img>
   <div class="summary">
-    {{$ctrl.bio}}
+    <div>{{$ctrl.bio}}</div>
   </div>
   <div>
   <tag ng-repeat="tag in $ctrl.tags" tag=tag />

@@ -10,7 +10,7 @@ const summarizer = (summary) => {
       return bio.join('. ')
     }
   } else {
-    return summary
+    return " "
   }
 }
 

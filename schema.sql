@@ -16,9 +16,9 @@ CREATE TABLE artist (
 );
 
 CREATE TABLE similar (
-  id int NOT NULL AUTO_INCREMENT,
-  artist_id int,
-  similar_id int,
+  id int NOT NULL UNIQUE AUTO_INCREMENT,
+  artist_id int NOT NULL,
+  similar_id int NOT NULL,
   PRIMARY KEY (ID),
   FOREIGN KEY (artist_id) REFERENCES artist(id),
   FOREIGN KEY (similar_id) REFERENCES artist(id)
@@ -39,6 +39,9 @@ CREATE TABLE artist_tags (
   FOREIGN KEY (artist_id) REFERENCES artist(id),
   FOREIGN KEY (tag_id) REFERENCES tags(id)
 );
+
+ALTER TABLE `similar` ADD UNIQUE `unique_index` (`artist_id`,`similar_id`);
+
 --
 
 

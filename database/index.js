@@ -17,28 +17,28 @@ const selectAll = (table) =>
 
 const findDuplicateArtist = (table, artist) =>
   new Promise((resolve, reject) => {
-    connection.query(`SELECT * FROM ${table} WHERE name = ?`, [artist], (err, results) => {
+    connection.query(`SELECT * FROM ${table} WHERE name = $1`, [artist], (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   })
 
 const insert = (table, data) =>
   new Promise ((resolve, reject) => {
-    connection.query(`INSERT INTO ${table} SET ?`, data, (err, results) => {
+    connection.query(`INSERT INTO ${table} SET $1`, data, (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   });
 
 const update = (table, data) =>
   new Promise ((resolve, reject) => {
-    connection.query(`UPDATE ${table} SET ? WHERE name = ?`, data, (err, results) => {
+    connection.query(`UPDATE ${table} SET $1 WHERE name = $2`, data, (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   })
 
 const addSimilar = (data) =>
   new Promise ((resolve, reject) => {
-    connection.query(`INSERT INTO similar (artist_id, similar_id) VALUES ((SELECT id FROM artist WHERE name=?), (SELECT id FROM artist WHERE name=?))`, data, (err, results) => {
+    connection.query(`INSERT INTO similar (artist_id, similar_id) VALUES ((SELECT id FROM artist WHERE name=$1), (SELECT id FROM artist WHERE name=$2))`, data, (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   });

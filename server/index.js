@@ -41,7 +41,7 @@ app.use('/search', function(req, res){
 
     db.addArtist(artistName)
     artists.forEach((artist) => {
-      db.addArtist(artist.name, artistName);
+      db.addArtist(artist.name);
       db.addSimilar([artistName, artist.name]);
     });
    res.end(body);

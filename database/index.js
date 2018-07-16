@@ -48,7 +48,7 @@ const addSimilar = (data) =>
     });
   });
 
-const addArtist = (artistName, parentArtist) =>
+const addArtist = (artistName) =>
   findDuplicateArtist('artist', artistName)
   .then((data) => {
     if (data.length === 0) {

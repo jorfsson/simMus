@@ -1,6 +1,6 @@
-var mysql = require('pg');
+var pg = require('pg');
 
-var newsql = new mysql.Client
+var newsql = new pg.Client
 var connection = newsql.connect(
 'postgres://auveunhkxoqjlx:d0dc24109a6d93a5fd01fd60bf54467425b7277576056f860ff0ef2a4ef1b4bb@ec2-54-227-240-7.compute-1.amazonaws.com:5432/d2tbdogc0lfloc'
 );

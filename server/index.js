@@ -5,8 +5,9 @@ const request = require('request');
 const db = require('../database');
 const helpers = require('../helpers');
 
-var PORT = process.env.PORT || 3000
 const app = express()
+
+var PORT = process.env.PORT || 3000
 
 app.use(function(req, res, next) {
   res.set("Access-Control-Allow-Origin", "*")
@@ -36,8 +37,8 @@ app.use('/search', function(req, res){
     if (json.similarartists === undefined) {
       res.end()
     }
-    const artists = json.similarartists.artist
 
+    const artists = json.similarartists.artist
 
     db.addArtist(artistName)
     artists.forEach((artist) => {

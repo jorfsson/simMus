@@ -1,7 +1,12 @@
-// var mysql = require('mysql');
-var pg = require('pg');
-var connection = new pg.Client('postgres://auveunhkxoqjlx:d0dc24109a6d93a5fd01fd60bf54467425b7277576056f860ff0ef2a4ef1b4bb@ec2-54-227-240-7.compute-1.amazonaws.com:5432/d2tbdogc0lfloc'
-);
+var mysql = require('mysql');
+
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '!Srekwah1',
+  socketPath: '/var/run/mysqld/mysqld.sock',
+  database: 'artists'
+});
 
 connection.connect(function(err) {
   if (err) { throw err } else { console.log('connected') }
@@ -17,28 +22,28 @@ const selectAll = (table) =>
 
 const findDuplicateArtist = (table, artist) =>
   new Promise((resolve, reject) => {
-    connection.query(`SELECT * FROM ${table} WHERE name = $1`, [artist], (err, results) => {
+    connection.query(`SELECT * FROM ${table} WHERE name = ?`, [artist], (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   })
 
 const insert = (table, data) =>
   new Promise ((resolve, reject) => {
-    connection.query(`INSERT INTO ${table} SET $1`, data, (err, results) => {
+    connection.query(`INSERT INTO ${table} SET ?`, data, (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   });
 
 const update = (table, data) =>
   new Promise ((resolve, reject) => {
-    connection.query(`UPDATE ${table} SET $1 WHERE name = $2`, data, (err, results) => {
+    connection.query(`UPDATE ${table} SET ? WHERE name = ?`, data, (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   })
 
 const addSimilar = (data) =>
   new Promise ((resolve, reject) => {
-    connection.query(`INSERT INTO similar (artist_id, similar_id) VALUES ((SELECT id FROM artist WHERE name=$1), (SELECT id FROM artist WHERE name=$2))`, data, (err, results) => {
+    connection.query(`INSERT INTO similar (artist_id, similar_id) VALUES ((SELECT id FROM artist WHERE name=?), (SELECT id FROM artist WHERE name=?))`, data, (err, results) => {
       if (err) { reject(err) } else { resolve(results) }
     });
   });

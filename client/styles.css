@@ -25,30 +25,43 @@ h4 {
 }
 
 .artist {
-
   clear:right;
 }
-
 
 .artistname {
   display: inline-block;
   width: 10%;
+  margin: auto;
+}
+
+.artistBlock {
+  width:100%;
 }
 
 .descriptionBlock {
-
+  width: 70%;
+  position:relative;
+  left: 100px;
   display: inline-flex;
 }
 
 .artist img {
-
-
   float: left;
 }
 
 .summary {
   position: relative;
-
   width: 60%;
   float: left
+}
+
+.node {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+.link {
+  stroke: #777;
+  stroke-width: 2px;
 }

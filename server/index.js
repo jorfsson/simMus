@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParse = require('body-parser');
+const path = require('path')
 const request = require('request');
 const db = require('../database');
 const helpers = require('../helpers');
@@ -31,9 +32,12 @@ app.use('/search', function(req, res){
     }
   }, (err, response, body) => {
     if (err) throw err;
-    const artists = JSON.parse(body).similarartists.artist
+    let json = JSON.parse(body)
+    if (json.similarartists === undefined) {
+      res.end()
+    }
+    const artists = json.similarartists.artist
 
-    if (!artists) res.end()
 
     db.addArtist(artistName)
     artists.forEach((artist) => {
@@ -76,6 +80,9 @@ app.use('/details', function(req, res){
   })
 })
 
+app.use('/nodes', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/templates/node.html'))
+})
 
 app.listen(PORT, function() {
   console.log(`listening on port ${PORT}!`);

@@ -12,8 +12,6 @@ angular.module('app')
         this.bio = data.artist.bio.summary.split('. ')
         this.bio.pop();
         this.bio = this.bio.join('. ')
-
-        console.log(this.bio)
       }, this.item.name)
     }
   },

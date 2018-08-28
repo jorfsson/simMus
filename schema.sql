@@ -37,7 +37,7 @@ CREATE TABLE artist_tags (
   tag_id int,
   PRIMARY KEY (ID),
   FOREIGN KEY (artist_id) REFERENCES artist(id),
-  FOREIGN KEY (tag_id) REFERENCES tags(id)
+  FOREIGN KEY (tag_id) REFERENCES tags(id),
 );
 
 ALTER TABLE `similar` ADD UNIQUE `unique_index` (`artist_id`,`similar_id`);

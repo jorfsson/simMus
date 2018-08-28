@@ -1,9 +1,12 @@
-var pg = require('pg');
+var mysql = require('mysql');
 
-var connection = new pg.Client(
-'postgres://auveunhkxoqjlx:d0dc24109a6d93a5fd01fd60bf54467425b7277576056f860ff0ef2a4ef1b4bb@ec2-54-227-240-7.compute-1.amazonaws.com:5432/d2tbdogc0lfloc'
-);
-
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  socketPath: '/var/run/mysqld/mysqld.sock',
+  database: 'artists'
+});
 
 connection.connect(function(err) {
   if (err) { throw err } else { console.log('connected') }
